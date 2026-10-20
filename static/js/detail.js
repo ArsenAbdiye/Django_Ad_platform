@@ -1,6 +1,5 @@
 // ======= ИНИЦИАЛИЗАЦИЯ ПРИ DOMContentLoaded =======
 document.addEventListener("DOMContentLoaded", function () {
-    initBurgerMenu();
     initCategoryToggle();
     initHoverCategoryLoad();
     loadAdvAll();
@@ -23,15 +22,7 @@ async function fetchCategories() {
 }
 
 // ======= ФУНКЦИИ ИНИЦИАЛИЗАЦИИ UI =======
-function initBurgerMenu() {
-    const btn = document.querySelector('.burger_menu button');
-    const menu = document.querySelector('.burger_menu');
-    if (btn && menu) {
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('open');
-        });
-    }
-}
+
 
 function initCategoryToggle() {
     const toggleButton = document.querySelector('.tag_button');
@@ -132,20 +123,30 @@ async function initProductDetail() {
         const response = await fetch(adId);
         const data = await response.json();
 
+        // Основное
         renderImages(data.images);
-        renderStatistics(data);
-        renderUser(data.user, data.hide_phone, data.phone_number);
+        renderStatistics(data); 
+        
         renderOptions(data.category_options.ad_categoy_fields);
         renderDescription(data.description);
         renderCity(data.city);
-        renderPrice(data);
+        renderPrice(data); // туда можно передавать data.currency
         renderBreadcrumbs(data.category);
-        renderPhone(data.phone_number);
+        
+        // Новые поля:
+        renderPhoneNumbers(data.phone_number, data.phone_numbers);
+        renderEmails(data.emails);
+        renderSocialLinks(data.social_network);
+        renderUser(data.user, data.hide_phone);
+        renderWorkDays(data.work_days);
+        renderCreatedAt(data.created_at);
+
 
     } catch (err) {
         console.error('Ошибка при загрузке деталей:', err);
     }
 }
+
 
 // ======= ОТДЕЛЬНЫЕ ФУНКЦИИ РЕНДЕРА =======
 function renderImages(images) {
@@ -167,13 +168,20 @@ function renderImages(images) {
     });
 
     const main = new Splide('#main-slider', {
-        type: 'fade', heightRatio: 0.5, pagination: false, arrows: false, cover: true,
+        type: 'fade', heightRatio: 0.8, pagination: false, arrows: true, cover: true,
     });
 
     const thumbs = new Splide('#thumbnail-slider', {
-        fixedWidth: 104, fixedHeight: 58, isNavigation: true, gap: 10, focus: 'center',
-        pagination: false, cover: true,
-        breakpoints: { 640: { fixedWidth: 66, fixedHeight: 38 } },
+        fixedWidth: 104,
+        fixedHeight: 78,
+        isNavigation: true,
+        gap: 10,
+        focus: 'center',
+        pagination: false,
+        cover: true,
+        breakpoints: {
+            640: { fixedWidth: 66, fixedHeight: 38 }
+        },
     });
 
     main.sync(thumbs);
@@ -181,34 +189,13 @@ function renderImages(images) {
     thumbs.mount();
 }
 
+
 function renderStatistics(data) {
     document.querySelector('.impressions').textContent = data.impressions ?? '0';
-    document.querySelector('.views').textContent = data.views ?? '0';
+    document.querySelector('.views').textContent = '';
     document.querySelector('.favorites_count').textContent = data.favorites_count ?? '0';
 }
 
-function renderUser(user, hidePhone, phoneNumber) {
-    const avatarImg = document.querySelector('.userAvatar-photo');
-    if (avatarImg) avatarImg.src = user.user_image;
-
-    const userNameText = document.querySelector('.userName-text');
-    if (userNameText) userNameText.textContent = user.usernickname;
-
-    const proLabel = document.querySelector('.pro-label');
-    if (proLabel) {
-        if (user.is_pro) proLabel.textContent = 'PRO';
-        else if (user.is_vip) proLabel.textContent = 'VIP';
-        else proLabel.remove();
-    }
-
-    const phoneP = document.querySelector('.phone-wrap p');
-    if (hidePhone) {
-        phoneP.textContent = '+996 XXX XXX XXX';
-        document.querySelector('.show-button')?.style.setProperty('display', 'none');
-    } else {
-        phoneP.textContent = phoneNumber;
-    }
-}
 
 function renderOptions(fields) {
     const container = document.querySelector('.details-page__params');
@@ -240,26 +227,7 @@ function renderCity(city) {
     }
 }
 
-function renderPrice(data) {
-    const priceElem = document.querySelector('.ad-detail-price-container p.LFHeading');
-    if (priceElem) {
-        priceElem.textContent = `${data.price} ${data.currency}`;
-    }
 
-    const avatarImg = document.querySelector('.userAvatar_photo');
-    if (avatarImg) {
-        avatarImg.src = data.user.user_image;
-        avatarImg.alt = data.user.usernickname || 'User avatar';
-    }
-
-    const userNameText = document.querySelector('.name');
-    if (userNameText) userNameText.textContent = data.user.usernickname;
-}
-
-function renderPhone(phoneNumber) {
-    const phoneElem = document.querySelector('.phone-item p.LFParagraph');
-    if (phoneElem) phoneElem.textContent = phoneNumber || '+996 555 507 7xx';
-}
 
 function renderBreadcrumbs(cat) {
     const ul = document.getElementById('breadcrumb');
@@ -300,3 +268,179 @@ function renderBreadcrumbs(cat) {
         ul.appendChild(li);
     });
 }
+
+function renderPrice(data) {
+    const priceBlock = document.querySelector('.de_price');
+    if (!priceBlock) return;
+
+    const price = Number(data.price).toLocaleString();
+    const currency = data.currency || 'KGS';
+
+    if (data.past_price) {
+        const oldPrice = Number(data.past_price).toLocaleString();
+        priceBlock.innerHTML = `
+            <span class="old_price">${oldPrice} ${currency}</span><br>
+            <span class="new_price">${price} ${currency}</span>
+        `;
+    } else {
+        priceBlock.textContent = `${price} ${currency}`;
+    }
+}
+
+function renderUser(user, hidePhone, phone) {
+    const userImg = document.querySelector('.de_img img');
+    const userName = document.querySelector('.de_name p');
+
+    if (userImg && user?.user_image) {
+        userImg.src = user.user_image;
+    }
+
+    if (userName && user?.usernickname) {
+        userName.textContent = user.usernickname;
+    }
+
+    // Если хочешь — сюда же можно вставить номер телефона (если не скрыт)
+    if (!hidePhone && phone) {
+        const phoneBlock = document.querySelector('.de_phone'); // добавь этот div в HTML
+        if (phoneBlock) {
+            phoneBlock.textContent = `Тел: ${phone}`;
+        }
+    }
+}
+
+
+function renderPhoneNumbers(mainPhone, extraPhones) {
+    const phonesBlock = document.querySelector('.de_phones');
+    if (!phonesBlock) return;
+
+    phonesBlock.innerHTML = '';
+
+    if (mainPhone) {
+        const pMain = document.createElement('p');
+        pMain.textContent = `${mainPhone}`;
+        phonesBlock.appendChild(pMain);
+    }
+
+    if (Array.isArray(extraPhones)) {
+        extraPhones.forEach((phoneObj, index) => {
+            if (phoneObj && phoneObj.number) {
+                const pExtra = document.createElement('p');
+                pExtra.textContent = ` ${phoneObj.number}`;
+                phonesBlock.appendChild(pExtra);
+            }
+        });
+    } else {
+        console.log('extraPhones не массив или отсутствует');
+    }
+}
+
+function renderEmails(emails) {
+    const emailsBlock = document.querySelector('.de_emails');
+    if (!emailsBlock) return;
+
+    emailsBlock.innerHTML = '';
+
+    if (Array.isArray(emails) && emails.length > 0) {
+        emails.forEach(emailObj => {
+            if (emailObj?.email) {
+                const p = document.createElement('p');
+                p.textContent = emailObj.email;
+                emailsBlock.appendChild(p);
+            }
+        });
+    }
+}
+
+function renderSocialLinks(socialNetworks) {
+    const socialBlock = document.querySelector('.de_social');
+    if (!socialBlock) return;
+
+    socialBlock.innerHTML = '';
+
+    if (Array.isArray(socialNetworks) && socialNetworks.length > 0) {
+        socialNetworks.forEach(socialObj => {
+            if (socialObj?.social_network_link) {
+                const a = document.createElement('a');
+                a.href = socialObj.social_network_link;
+                a.target = '_blank';
+                a.rel = 'noopener noreferrer';
+                a.textContent = socialObj.social_network_link; // просто ссылка как текст
+                socialBlock.appendChild(a);
+                socialBlock.appendChild(document.createElement('br')); // перенос строки
+            }
+        });
+    }
+}
+
+
+function renderWorkDays(workDays) {
+    const workBlock = document.querySelector('.de_work');
+    if (!workBlock) return;
+
+    workBlock.innerHTML = '';
+
+    if (!workDays || typeof workDays !== 'object') {
+        workBlock.textContent = '';
+        return;
+    }
+
+    const daysMap = {
+        monday: 'Понедельник',
+        tuesday: 'Вторник',
+        wednesday: 'Среда',
+        thursday: 'Четверг',
+        friday: 'Пятница',
+        saturday: 'Суббота',
+        sunday: 'Воскресенье'
+    };
+
+    for (const [key, value] of Object.entries(workDays)) {
+        if (daysMap[key]) {
+            const p = document.createElement('p');
+            p.textContent = `${daysMap[key]}: ${value || '—'}`;
+            workBlock.appendChild(p);
+        }
+    }
+}
+
+function renderCreatedAt(createdAt) {
+    const createBlock = document.querySelector('.de_create');
+    if (!createBlock) return;
+
+    if (!createdAt) {
+        createBlock.textContent = 'Дата не указана';
+        return;
+    }
+
+    // Преобразуем строку в объект Date
+    const date = new Date(createdAt);
+
+    // Форматируем дату в удобный вид, например: 25.06.2025 16:38
+    const formattedDate = date.toLocaleString('ru-RU', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+
+    createBlock.textContent = `${formattedDate}`;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const postBtn = document.querySelector('.ad_post');
+
+    if (postBtn) {
+        postBtn.addEventListener('click', (event) => {
+            event.preventDefault();
+
+            const accessToken = localStorage.getItem('accessToken');
+
+            if (accessToken) {
+                window.location.href = 'http://127.0.0.1:8000//ad_create';
+            } else {
+                document.querySelector('.log_inp').style.left = '0';
+            }
+        });
+    }
+});

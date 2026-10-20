@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    <div class="log_inp ">
+        <div class="log_window">
+            <div class="log_or_reg">
+                <button class="log_btn">Вход</button>
+                <button class="reg_btn">Регистрация</button>
+            </div>
+            <div class="social_icons">
+                <button class="google_login_btn gogle"><img
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ-REoeyV6LGZp_VsQ2Mq1gJIlytMbrP1CxA&s"
+                        alt=""></button>
+            </div>
+            <div class="log_inps">
+                <div class="LFInput login-form__field loginp">
+                    <div class="LFInput__row ">
+                        <div class="LFInput__wrapper with-icon   "><input class="LFInput__input error login_email_input"
+                                type="text" placeholder="Введите email " value=""></div>
+                        <div class="LFInput__info-bar"></div>
+                    </div>
+                </div>
+                <div class="LFInputPassword login-form__field loginp">
+                    <div class="LFInputPassword__row ">
+                        <div class="LFInputPassword__wrapper"><span tabindex="0" class="LFIconLock"><svg class="svg"
+                                    viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M7.99992 1.83325C6.38909 1.83325 5.08325 3.18997 5.08325 4.86355V6.68174H3.53244C3.42243 6.68174 3.33325 6.77439 3.33325 6.88868V10.3181C3.33325 12.9958 5.42259 15.1666 7.99992 15.1666C10.5772 15.1666 12.6666 12.9958 12.6666 10.3181V6.88868C12.6666 6.77439 12.5774 6.68174 12.4674 6.68174H10.9166V4.86355C10.9166 3.18997 9.61075 1.83325 7.99992 1.83325ZM7.41659 9.10598C7.41659 8.77126 7.67775 8.49992 7.99992 8.49992C8.32208 8.49992 8.58325 8.77126 8.58325 9.10598V10.3181C8.58325 10.6528 8.32208 10.9242 7.99992 10.9242C7.67775 10.9242 7.41659 10.6528 7.41659 10.3181V9.10598ZM6.24992 4.86355C6.24992 3.8594 7.03342 3.04537 7.99992 3.04537C8.96642 3.04537 9.74992 3.8594 9.74992 4.86355V6.68174H6.24992V4.86355Z"
+                                        fill="#a1a8bd"></path>
+                                </svg></span><input class="LFInputPassword__input  login_password_input" type="password"
+                                placeholder="Пароль" value="">
+                            <div class="LFInputPassword__visibility-toggler"><span tabindex="0"
+                                    class="LFIcon primary size-16  LFIconEyeCross  size-16 #a1a8bd "><svg class="svg"
+                                        viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" fill="#a1a8bd"
+                                            d="M13.2948 2.62801C13.1321 2.45733 12.8683 2.45733 12.7055 2.62801L11.2539 4.15075C10.31 3.6247 9.20883 3.27705 8.00016 3.27705C4.1103 3.27705 1.3335 6.87779 1.3335 8.43781C1.3335 9.32607 2.23374 10.8759 3.7271 12.046L2.09893 13.7539C1.93621 13.9246 1.93621 14.2013 2.09893 14.372C2.26165 14.5427 2.52547 14.5427 2.68819 14.372L4.43392 12.5408C5.44385 13.1683 6.6555 13.5986 8.00016 13.5986C11.89 13.5986 14.6668 9.99784 14.6668 8.43781C14.6668 7.49444 13.6514 5.8048 11.9884 4.61643L13.2948 3.24612C13.4575 3.07543 13.4575 2.7987 13.2948 2.62801ZM8.8161 6.70786C8.57072 6.57648 8.29355 6.50251 8.00015 6.50251C6.99599 6.50251 6.18197 7.36897 6.18197 8.4378C6.18197 8.74003 6.24705 9.02608 6.36312 9.28093L8.8161 6.70786ZM6.88674 9.96789L9.45379 7.27516C9.68267 7.59886 9.81833 8.00146 9.81833 8.4378C9.81833 9.50663 9.0043 10.3731 8.00015 10.3731C7.58067 10.3731 7.19438 10.2219 6.88674 9.96789Z">
+                                        </path>
+                                    </svg></span></div>
+                        </div>
+                        <div class="LFInputPassword__info-bar"></div>
+                    </div>
+                </div>
+                <div class="code">
+                    <div class="values">
+                        <p>Введите код отправленный на вашу почту</p>
+                        <div class="LFInput login-form__field ">
+                            <div class="LFInput__row ">
+                                <div class="LFInput__wrapper with-icon   "><input
+                                        class="LFInput__input error code_inp_mail" type="text"
+                                        placeholder="Введите email " value=""></div>
+                                <div class="LFInput__info-bar"></div>
+                            </div>
+                        </div>
+                        <div class="LFInputPassword__row ">
+                            <div class="LFInputPassword__wrapper"><span tabindex="0" class="LFIconLock"><svg class="svg"
+                                        viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M7.99992 1.83325C6.38909 1.83325 5.08325 3.18997 5.08325 4.86355V6.68174H3.53244C3.42243 6.68174 3.33325 6.77439 3.33325 6.88868V10.3181C3.33325 12.9958 5.42259 15.1666 7.99992 15.1666C10.5772 15.1666 12.6666 12.9958 12.6666 10.3181V6.88868C12.6666 6.77439 12.5774 6.68174 12.4674 6.68174H10.9166V4.86355C10.9166 3.18997 9.61075 1.83325 7.99992 1.83325ZM7.41659 9.10598C7.41659 8.77126 7.67775 8.49992 7.99992 8.49992C8.32208 8.49992 8.58325 8.77126 8.58325 9.10598V10.3181C8.58325 10.6528 8.32208 10.9242 7.99992 10.9242C7.67775 10.9242 7.41659 10.6528 7.41659 10.3181V9.10598ZM6.24992 4.86355C6.24992 3.8594 7.03342 3.04537 7.99992 3.04537C8.96642 3.04537 9.74992 3.8594 9.74992 4.86355V6.68174H6.24992V4.86355Z"
+                                            fill="#a1a8bd"></path>
+                                    </svg></span><input class="LFInputPassword__input  code_inp" type="password"
+                                    placeholder="Код" value="">
+                                <div class="LFInputPassword__visibility-toggler"></div>
+                            </div>
+                            <div class="LFInputPassword__info-bar"></div>
+                        </div>
+                        <button class="LFButton large primary-green check" type="submit">Проверить</button>
+                        <button class="LFButton large primary-green reset" type="submit">Отправить код еще раз</button>
+                        <p class="LFParagraph size-14  forgot-password__link  back" style="color: rgb(115, 125, 155);">
+                            Вернуться</p>
+                    </div>
+                </div>
+                <div class="login-form__controls logbtns">
+                    <button class="LFButton large primary-green login_btn" type="submit">Войти</button>
+                    <div class="forgot-password">
+                        <div>
+                            <p class="LFParagraph size-14  forgot-password__link  res_btn"
+                                style="color: rgb(115, 125, 155);">Забыли пароль?</p><br>
+                            <p class="LFParagraph size-14  forgot-password__link  codebtn"
+                                style="color: rgb(115, 125, 155);">код</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <span class="modal__close"><span tabindex="0" class="LFIcon primary size-24  LFIconCross "><svg
+                    viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="#737d9b"
+                        d="M3.28114 2.21979C2.98806 1.92674 2.51289 1.92674 2.21981 2.21979C1.92673 2.51284 1.92673 2.98798 2.21981 3.28103L10.9387 11.9992L2.21981 20.7173C1.92673 21.0104 1.92673 21.4855 2.21981 21.7786C2.51289 22.0716 2.98806 22.0716 3.28114 21.7786L12 13.0604L20.7189 21.7785C21.0119 22.0716 21.4871 22.0716 21.7802 21.7785C22.0733 21.4854 22.0733 21.0103 21.7802 20.7173L13.0614 11.9992L21.7802 3.28109C22.0733 2.98804 22.0733 2.51291 21.7802 2.21985C21.4871 1.9268 21.0119 1.9268 20.7189 2.21985L12 10.9379L3.28114 2.21979Z">
+                    </path>
+                </svg></span></span>
+    </div>
+    <div class="reg_inp ">
+        <div class="log_window">
+            <div class="log_or_reg">
+                <button class="log_btn">Вход</button>
+                <button class="reg_btn">Регистрация <span class="underline"></span></button>
+            </div>
+            <button class="google_login_btn gogle"><img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ-REoeyV6LGZp_VsQ2Mq1gJIlytMbrP1CxA&s"
+                    alt=""></button>
+            <div class="LFInput login-form__field">
+                <div class="LFInput login-form__field">
+                    <div class="LFInput__row">
+                        <div class="LFInput__wrapper with-icon   ">
+                            <label class="LFPhoneInput__wrapper error"><input autocomplete="on"
+                                    class="LFInput__input LFPhoneInput__input reg_inp_email" type="tel"
+                                    placeholder="email" value=""></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="LFInputPassword login-form__field">
+                    <div class="LFInputPassword__row">
+                        <div class="LFInputPassword__wrapper"><span tabindex="0" class="LFIconLock"><svg class="svg"
+                                    viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M7.99992 1.83325C6.38909 1.83325 5.08325 3.18997 5.08325 4.86355V6.68174H3.53244C3.42243 6.68174 3.33325 6.77439 3.33325 6.88868V10.3181C3.33325 12.9958 5.42259 15.1666 7.99992 15.1666C10.5772 15.1666 12.6666 12.9958 12.6666 10.3181V6.88868C12.6666 6.77439 12.5774 6.68174 12.4674 6.68174H10.9166V4.86355C10.9166 3.18997 9.61075 1.83325 7.99992 1.83325ZM7.41659 9.10598C7.41659 8.77126 7.67775 8.49992 7.99992 8.49992C8.32208 8.49992 8.58325 8.77126 8.58325 9.10598V10.3181C8.58325 10.6528 8.32208 10.9242 7.99992 10.9242C7.67775 10.9242 7.41659 10.6528 7.41659 10.3181V9.10598ZM6.24992 4.86355C6.24992 3.8594 7.03342 3.04537 7.99992 3.04537C8.96642 3.04537 9.74992 3.8594 9.74992 4.86355V6.68174H6.24992V4.86355Z"
+                                        fill="#a1a8bd"></path>
+                                </svg></span><input class="LFInputPassword__input  reg_enp_password" type="password"
+                                placeholder="Пароль" value="">
+                            <div class="LFInputPassword__visibility-toggler"><span tabindex="0"
+                                    class="LFIcon primary size-16  LFIconEyeCross  size-16 #a1a8bd "><svg class="svg"
+                                        viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" fill="#a1a8bd"
+                                            d="M13.2948 2.62801C13.1321 2.45733 12.8683 2.45733 12.7055 2.62801L11.2539 4.15075C10.31 3.6247 9.20883 3.27705 8.00016 3.27705C4.1103 3.27705 1.3335 6.87779 1.3335 8.43781C1.3335 9.32607 2.23374 10.8759 3.7271 12.046L2.09893 13.7539C1.93621 13.9246 1.93621 14.2013 2.09893 14.372C2.26165 14.5427 2.52547 14.5427 2.68819 14.372L4.43392 12.5408C5.44385 13.1683 6.6555 13.5986 8.00016 13.5986C11.89 13.5986 14.6668 9.99784 14.6668 8.43781C14.6668 7.49444 13.6514 5.8048 11.9884 4.61643L13.2948 3.24612C13.4575 3.07543 13.4575 2.7987 13.2948 2.62801ZM8.8161 6.70786C8.57072 6.57648 8.29355 6.50251 8.00015 6.50251C6.99599 6.50251 6.18197 7.36897 6.18197 8.4378C6.18197 8.74003 6.24705 9.02608 6.36312 9.28093L8.8161 6.70786ZM6.88674 9.96789L9.45379 7.27516C9.68267 7.59886 9.81833 8.00146 9.81833 8.4378C9.81833 9.50663 9.0043 10.3731 8.00015 10.3731C7.58067 10.3731 7.19438 10.2219 6.88674 9.96789Z">
+                                        </path>
+                                    </svg></span></div>
+                        </div>
+                        <div class="LFInputPassword__info-bar"></div>
+                    </div>
+                </div>
+                <label class="registration-form__confirm"><span class="registration-form__confirm-controls"><label
+                            class="LFCheckbox   checked"><input class="LFCheckbox__input reg_confirm" type="checkbox"
+                                value="" checked="">
+                            <div class="LFCheckbox__checkmark"><span tabindex="0"
+                                    class="LFIcon primary size-16  LFIconCheck "><svg viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M9.28616 13.7998L7.09412 11.6796C6.51468 11.1192 5.59713 11.1129 5.01009 11.6654C4.38271 12.2559 4.37591 13.2508 4.99518 13.8497L9.28616 18L19.0105 8.59453C19.6296 7.99574 19.6296 7.00321 19.0105 6.40443C18.4188 5.83214 17.4795 5.83337 16.8893 6.40721L9.28616 13.7998Z"
+                                            fill="#ffffff"></path>
+                                    </svg></span></div>
+                            <div class="LFCheckbox__content-container">
+                                <div>
+                                    <p class="LFParagraph size-16  " style="color: rgb(10, 19, 49);"></p>
+                                </div>
+                            </div>
+                        </label><span class="LFCaption size-12 registration-form__confirm-description"
+                            style="color: rgb(10, 19, 49);"><span>Регистрируясь, вы принимаете <a
+                                    class="LFLink extra-small  weight-400 " href="https://lalafo.kg/page/personal-data"
+                                    target="_blank" style="color: rgb(34, 202, 70);">Согласие на обработку персональных
+                                    данных</a>, <a class="LFLink extra-small  weight-400 "
+                                    href="https://lalafo.kg/page/user-agreement" target="_blank"
+                                    style="color: rgb(34, 202, 70);">Пользовательское соглашение</a>, <a
+                                    class="LFLink extra-small  weight-400 " href="https://lalafo.kg/page/policy"
+                                    target="_blank" style="color: rgb(34, 202, 70);">Политика конфиденциальности</a> и
+                                <a class="LFLink extra-small  weight-400 " href="https://lalafo.kg/page/agreement-offer"
+                                    target="_blank" style="color: rgb(34, 202, 70);">Договор-оферта</a> на
+                                lalafo.kg</span></span></span></label>
+                <div class="login-form__controls">
+                    <button class="LFButton large primary-green  reg_btn_reg" type="submit">Зарегистрироваться</button>
+                    <div class="forgot-password">
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <span class="modal__close"><span tabindex="0" class="LFIcon primary size-24  LFIconCross "><svg
+                    viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="#737d9b"
+                        d="M3.28114 2.21979C2.98806 1.92674 2.51289 1.92674 2.21981 2.21979C1.92673 2.51284 1.92673 2.98798 2.21981 3.28103L10.9387 11.9992L2.21981 20.7173C1.92673 21.0104 1.92673 21.4855 2.21981 21.7786C2.51289 22.0716 2.98806 22.0716 3.28114 21.7786L12 13.0604L20.7189 21.7785C21.0119 22.0716 21.4871 22.0716 21.7802 21.7785C22.0733 21.4854 22.0733 21.0103 21.7802 20.7173L13.0614 11.9992L21.7802 3.28109C22.0733 2.98804 22.0733 2.51291 21.7802 2.21985C21.4871 1.9268 21.0119 1.9268 20.7189 2.21985L12 10.9379L3.28114 2.21979Z">
+                    </path>
+                </svg></span></span>
+    </div>
+    <div class="res_pass ">
+        <div class="log_window res_win">
+            <p class="LFParagraph size-16  forgot_password__text" style="color: rgb(10, 19, 49);">Пароль будет отправлен
+                на email или номер телефона, указанные при регистрации</p>
+
+            <div class="LFInput__wrapper with-icon  resres ">
+                <label class="LFPhoneInput__wrapper error"><input autocomplete="on"
+                        class="LFInput__input LFPhoneInput__input reset_email_input" type="tel" placeholder="email"
+                        value=""><span tabindex="0" class="LFIcon primary size-16  LFIconEmail "><svg class="svg"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path fill-rule="evenodd" fill="#a1a8bd"
+                                d="M12 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm-2.144 2h4.287A5 5 0 0 1 19 16.81l.665 2.714A2 2 0 0 1 17.722 22H6.277a2 2 0 0 1-1.942-2.476L5 16.81A5 5 0 0 1 9.856 13z">
+                            </path>
+                        </svg></span></label>
+            </div>
+
+            <div class="login-form__controls">
+                <button class="LFButton large primary-green  reset_btn" type="submit">Отправить</button>
+                <div class="forgot-password">
+                    <div></div>
+                </div>
+            </div>
+
+        </div>
+        <span class="modal__close asd"><span tabindex="0" class="LFIcon primary size-24  LFIconCross "><svg
+                    viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="#737d9b"
+                        d="M3.28114 2.21979C2.98806 1.92674 2.51289 1.92674 2.21981 2.21979C1.92673 2.51284 1.92673 2.98798 2.21981 3.28103L10.9387 11.9992L2.21981 20.7173C1.92673 21.0104 1.92673 21.4855 2.21981 21.7786C2.51289 22.0716 2.98806 22.0716 3.28114 21.7786L12 13.0604L20.7189 21.7785C21.0119 22.0716 21.4871 22.0716 21.7802 21.7785C22.0733 21.4854 22.0733 21.0103 21.7802 20.7173L13.0614 11.9992L21.7802 3.28109C22.0733 2.98804 22.0733 2.51291 21.7802 2.21985C21.4871 1.9268 21.0119 1.9268 20.7189 2.21985L12 10.9379L3.28114 2.21979Z">
+                    </path>
+                </svg></span></span>
+    </div>
+    <header class="headser">
+        <div class="head">
+            <div class="hed_first">
+                <div class="logo">
+                    {% if logo %}
+                    <a href="http://127.0.0.1:8000/"><img src="{{logo.0.header_logo.url}}" alt="Логотип"></a>
+                    {% endif %}
+                </div>
+                <div class="burger_menu">
+                    <button>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 
+                        5.25h16.5" />
+                        </svg>
+                    </button>
+                    <div class="burger_links">
+                        <ul>
+                            {% for category in regular_categories %}
+                            <li>
+                                {% if category.link.all %}
+                                <p>{{ category.category_text }}</p>
+                                <ul>
+                                    {% for link in category.link.all %}
+                                    <li><a href="{{ link.url_link }}">{{ link.link_text }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                                {% else %}
+                                <a href="{{ category.category_link|default:'#' }}">{{ category.category_text }}</a>
+                                {% endif %}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        <div class="sicials">
+                            {% for sc in social_categories %}
+                            {% if sc.is_instagram and sc.category_link %}
+                            <a href="{{ sc.category_link }}" target="_blank">
+                                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M8.00083 0.666626C6.0092 0.666626 5.75947 0.675068 4.97729 0.710756C4.19674 0.746357 3.66366 0.870336 3.1972 1.05163C2.71497 1.23901 2.30601 1.48976 1.8983 1.89744C1.49062 2.30515 1.23986 2.71412 1.05249 3.19635C0.87119 3.6628 0.747212 4.19589 0.711611 4.97644C0.675922 5.75861 0.66748 6.00835 0.66748 7.99997C0.66748 9.99157 0.675922 10.2413 0.711611 11.0235C0.747212 11.804 0.87119 12.3371 1.05249 12.8036C1.23986 13.2858 1.49062 13.6948 1.8983 14.1025C2.30601 14.5102 2.71497 14.7609 3.1972 14.9483C3.66366 15.1296 4.19674 15.2536 4.97729 15.2892C5.75947 15.3249 6.0092 15.3333 8.00083 15.3333C9.99243 15.3333 10.2422 15.3249 11.0243 15.2892C11.8049 15.2536 12.338 15.1296 12.8044 14.9483C13.2867 14.7609 13.6956 14.5102 14.1033 14.1025C14.511 13.6948 14.7618 13.2858 14.9492 12.8036C15.1304 12.3371 15.2544 11.804 15.29 11.0235C15.3257 10.2413 15.3341 9.99157 15.3341 7.99997C15.3341 6.00835 15.3257 5.75861 15.29 4.97644C15.2544 4.19589 15.1304 3.6628 14.9492 3.19635C14.7618 2.71412 14.511 2.30515 14.1033 1.89744C13.6956 1.48976 13.2867 1.23901 12.8044 1.05163C12.338 0.870336 11.8049 0.746357 11.0243 0.710756C10.2422 0.675068 9.99243 0.666626 8.00083 0.666626ZM8.00099 1.99997C9.95514 1.99997 10.1866 2.00744 10.9584 2.04265C11.6719 2.07518 12.0594 2.19441 12.3173 2.29464C12.6589 2.4274 12.9027 2.586 13.1588 2.84212C13.4149 3.0982 13.5735 3.34201 13.7063 3.68362C13.8065 3.94151 13.9258 4.32903 13.9583 5.0426C13.9935 5.81432 14.001 6.0458 14.001 7.99998C14.001 9.95414 13.9935 10.1856 13.9583 10.9573C13.9258 11.6709 13.8065 12.0584 13.7063 12.3163C13.5735 12.6579 13.4149 12.9017 13.1588 13.1578C12.9027 13.4139 12.6589 13.5725 12.3173 13.7053C12.0594 13.8055 11.6719 13.9248 10.9584 13.9573C10.1867 13.9925 9.95529 14 8.00099 14C6.04667 14 5.81524 13.9925 5.0436 13.9573C4.33004 13.9248 3.94252 13.8055 3.68463 13.7053C3.34301 13.5725 3.09921 13.4139 2.84312 13.1578C2.58703 12.9017 2.42841 12.6579 2.29565 12.3163C2.19542 12.0584 2.07619 11.6709 2.04365 10.9573C2.00844 10.1856 2.00098 9.95414 2.00098 7.99998C2.00098 6.0458 2.00844 5.81432 2.04365 5.0426C2.07619 4.32903 2.19542 3.94151 2.29565 3.68362C2.42841 3.34201 2.587 3.0982 2.84312 2.84212C3.09921 2.586 3.34301 2.4274 3.68463 2.29464C3.94252 2.19441 4.33004 2.07518 5.0436 2.04265C5.81533 2.00744 6.04681 1.99997 8.00099 1.99997ZM8.00083 11.3333C6.15985 11.3333 4.66748 9.84093 4.66748 7.99998C4.66748 6.15901 6.15985 4.66664 8.00083 4.66664C9.84177 4.66664 11.3341 6.15901 11.3341 7.99998C11.3341 9.84093 9.84177 11.3333 8.00083 11.3333ZM8.0005 9.99997C6.89591 9.99997 6.00049 9.10454 6.00049 7.99998C6.00049 6.89539 6.89591 5.99997 8.0005 5.99997C9.10506 5.99997 10.0005 6.89539 10.0005 7.99998C10.0005 9.10454 9.10506 9.99997 8.0005 9.99997ZM11.667 5.3333C12.2193 5.3333 12.667 4.88561 12.667 4.33332C12.667 3.78103 12.2193 3.3333 11.667 3.3333C11.1147 3.3333 10.667 3.78103 10.667 4.33332C10.667 4.88561 11.1147 5.3333 11.667 5.3333Z"
+                                        fill="#737d9b"></path>
+                                </svg>
+                            </a>
+                            <hr>
+                            {% elif sc.is_facebook and sc.category_link %}
+                            <a href="{{ sc.category_link }}" target="_blank">
+                                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M6.25124 15H8.7525V8.00342H10.6289L11 5.81724H8.7525V4.23307C8.7525 3.72238 9.07675 3.18618 9.54017 3.18618H10.8175V1H9.25208V1.0098C6.8027 1.10033 6.29946 2.54498 6.25582 4.06242H6.25124V5.81724H5V8.00342H6.25124V15Z"
+                                        fill="#737d9b"></path>
+                                </svg>
+                            </a>
+                            {% elif sc.is_twitter and sc.category_link %}
+                            <a href="{{ sc.category_link }}" target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M13.33 3.59a3.207 3.207 0 0 0-5.443 2.932c-2.403-.063-5.03-1.267-6.612-3.328-.972 1.683-.13 3.555.973 4.237-.378.028-1.073-.044-1.4-.363-.022 1.117.515 2.597 2.473 3.134-.377.203-1.045.145-1.335.102.102.942 1.422 2.175 2.866 2.175-.514.596-2.45 1.675-4.623 1.332a9.634 9.634 0 0 0 5.016 1.418c5.173 0 9.19-4.193 8.974-9.365v-.058l-.002-.047a5.532 5.532 0 0 0 1.554-1.642c-.261.145-1.047.433-1.778.505.47-.253 1.164-1.082 1.336-1.742-.452.29-1.489.71-2 .71z"
+                                        fill="#737d9b"></path>
+                                </svg>
+                            </a>
+                            {% else %}
+                            <a href="{{ sc.category_link|default:'#' }}" target="_blank">
+                                {{ sc.category_text }}
+                            </a>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="hed_second">
+                <div class="head_links">
+                    <a href=""><svg class="heart" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M13.6385 3.11717C14.2968 3.83213 14.6666 4.80202 14.6666 5.81337C14.6666 6.82471 14.2968 7.7946 13.6385 8.50956L8.98197 13.5694C8.95632 13.5973 8.92949 13.6241 8.90155 13.6497C8.35911 14.1465 7.51566 14.1106 7.01764 13.5694L2.3611 8.50956C0.990719 7.02049 0.990719 4.60624 2.3611 3.11717C3.73147 1.6281 5.9533 1.6281 7.32367 3.11717L7.99981 3.85187L8.67594 3.11717C9.33392 2.40188 10.2265 2 11.1572 2C12.088 2 12.9806 2.40188 13.6385 3.11717Z"
+                                fill="#a1a8bd"></path>
+                        </svg></a>
+                    <button class="log">Вход Регистрация</button>
+                    <div class="user_info">
+                        <div class="user_button">
+                            <img class="user_img"
+                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaUTp3j_LpF5r5_gNdvW0g7p057ExdcHWbUQ&s"
+                                alt="">
+                            <p class="user_name"></p>
+                            <span tabindex="0" class="LFIcon primary size-12  LFIconArrowDown "><svg viewBox="0 0 24 24"
+                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M11.1778 16.6758C11.6319 17.1081 12.3681 17.1081 12.8222 16.6758L21.7957 8.13375C22.0681 7.87439 22.0681 7.45388 21.7957 7.19452C21.5232 6.93516 21.0815 6.93516 20.809 7.19452L12 15.58L3.191 7.19452C2.91855 6.93516 2.4768 6.93516 2.20434 7.19452C1.93189 7.45388 1.93189 7.87439 2.20434 8.13375L11.1778 16.6758Z"
+                                        fill="#737d9b"></path>
+                                </svg></span>
+                        </div>
+                        <div class="dropdown-menu-wrap user_menu">
+                            <ul class="dropdown-menu">
+                                <div class="css-1qhw5gs">
+                                    <div class="lalafo-club-banner css-1qa90nz">
+                                        <div class="loggo"><img
+                                                src="https://isorepublic.com/wp-content/uploads/2018/11/blue-hour-landscape-450x300.jpg"
+                                                alt="lalafo-club logo" width="120" height="20"><p class="olfo">ollfo</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <li class="user-menu__list-item"><a class="LFLink large  weight-400 "
+                                        href="http://127.0.0.1:8000/settings" target="_blank">Настройки</a></li>
+                                <li class="user-menu__list-item user-logout">
+                                    <p class="LFParagraph get_out size-16  " style="color: rgb(115, 125, 155);">Выйти
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <button class="ad_post" href="#">Подать объявление</button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="us_user">
+        <div class="us_us">
+            <div class="us_img"></div>
+            <div class="us_name"></div>
+            <div class="us_phone"></div>
+            <div class="us_email"></div>
+        </div>
+        <div class="cards">
+            
+        </div>
+        
+    </section>
+    <footer>
+        <div class="fo_logo"></div>
+        <div class="fo_copyright"></div>
+        <div class="fo_links"></div>
+    </footer>
+    {% load static %}
+    <script src="{% static 'js/funcs/res.js' %}"></script>
+    <script src="{% static 'js/user.js' %}"></script>
+</body>
+</html>

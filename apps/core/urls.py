@@ -18,6 +18,7 @@ urlpatterns = [
     path('card_detail', card_detail, name='card_detail'),
     path('cards_search', cards_search, name='cards_search'),
     path('ad_create', ad_create, name='ad_create'),
-    path('settings', settings, name='settings')
+    path('settings', settings, name='settings'),
+    path('user', user, name='user')
 
 ]

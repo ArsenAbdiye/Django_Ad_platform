@@ -13,5 +13,6 @@ user_router.register(r'user_options', UserOptionsViewSet, basename='user_options
 user_router.register(r'user_contacts', UserContactsViewSet, basename='user_contacts')
 user_router.register(r'user', UserUpdateViewSet, basename='user_password_change')
 user_router.register(r'password_reset_email', ResetPasswordViewSet, basename='password_reset_email')
+user_router.register(r'user_info', UserIfoViewSet, basename='user_info')
 
 

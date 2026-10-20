@@ -218,3 +218,10 @@ class ResetPasswordViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
         send_reset_password_email.delay(email, new_password)
 
         return Response({"detail": "Новый пароль отправлен на вашу почту."}, status=status.HTTP_200_OK)
+    
+
+@extend_schema(tags=["User"])
+class UserIfoViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+    queryset = CustomUser.objects.all()
+    serializer_class =UserInfoSerializer
+    

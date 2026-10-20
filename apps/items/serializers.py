@@ -368,3 +368,14 @@ class AdMapСoordinatesSerializer(serializers.ModelSerializer):
         fields = ('__all__')
 
 
+class UserFavoriteAdSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Favorit
+        fields = ['id', 'ad']
+
+
+class UserFavoriteAdCardsSerializer(serializers.ModelSerializer):
+    ad = AdCardSerializer(read_only=True)
+    class Meta:
+        model = Favorit
+        fields = ['id', 'ad']

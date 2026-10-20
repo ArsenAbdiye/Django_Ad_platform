@@ -251,3 +251,20 @@ class citysViewSet(mixins.ListModelMixin,viewsets.GenericViewSet):
     queryset = Citys.objects.all()
     serializer_class = CitysSerializer
 
+
+@extend_schema(tags=['Ad'])
+class FavoriteAdViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    serializer_class = UserFavoriteAdSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Favorit.objects.filter(user=self.request.user)
+
+
+@extend_schema(tags=['Ad'])
+class FavoriteAdCardsViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    serializer_class = UserFavoriteAdCardsSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Favorit.objects.filter(user=self.request.user)

@@ -1,48 +1,36 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const btn = document.querySelector('.burger_menu button');
-    const menu = document.querySelector('.burger_menu');
-
-    if (btn && menu) {
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('open');
-        });
-    }
-});
-
-
 async function loadAdvAll() {
-  try {
-    const response = await fetch('/api/advertisments/');
-    if (!response.ok) throw new Error('Ошибка загрузки рекламы');
-    const data = await response.json();
-    const adverts = data.results || [];
+    try {
+        const response = await fetch('/api/advertisments/');
+        if (!response.ok) throw new Error('Ошибка загрузки рекламы');
+        const data = await response.json();
+        const adverts = data.results || [];
 
-    if (adverts.length === 0) return;
+        if (adverts.length === 0) return;
 
-    const link = document.getElementById('adv-link');
-    const img = document.getElementById('adv-img');
+        const link = document.getElementById('adv-link');
+        const img = document.getElementById('adv-img');
 
-    let currentIndex = 0;
+        let currentIndex = 0;
 
-    function showAd(index) {
-      link.href = adverts[index].advertisment_url || '#';
-      img.src = adverts[index].advertisment_image || '';
+        function showAd(index) {
+            link.href = adverts[index].advertisment_url || '#';
+            img.src = adverts[index].advertisment_image || '';
+        }
+
+        showAd(currentIndex);
+
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % adverts.length;
+            showAd(currentIndex);
+        }, 30000);
+
+    } catch (error) {
+        console.error('Ошибка при загрузке рекламы:', error);
     }
-
-    showAd(currentIndex);
-
-    setInterval(() => {
-      currentIndex = (currentIndex + 1) % adverts.length;
-      showAd(currentIndex);
-    }, 30000); 
-
-  } catch (error) {
-    console.error('Ошибка при загрузке рекламы:', error);
-  }
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  loadAdvAll();
+    loadAdvAll();
 });
 
 
@@ -60,56 +48,106 @@ document.addEventListener("DOMContentLoaded", function () {
             fetch('/api/subcategorys').then(res => res.json()),
             fetch('/api/subsubcategorys').then(res => res.json())
         ])
-        .then(([subcategoriesData, subsubcategoriesData]) => {
-            const subcategories = Array.isArray(subcategoriesData) 
-                ? subcategoriesData 
-                : (subcategoriesData.subcategories || subcategoriesData.results || []);
+            .then(([subcategoriesData, subsubcategoriesData]) => {
+                const subcategories = Array.isArray(subcategoriesData)
+                    ? subcategoriesData
+                    : (subcategoriesData.subcategories || subcategoriesData.results || []);
 
-            const subsubcategories = Array.isArray(subsubcategoriesData)
-                ? subsubcategoriesData
-                : (subsubcategoriesData.subsubcategories || subsubcategoriesData.results || []);
+                const subsubcategories = Array.isArray(subsubcategoriesData)
+                    ? subsubcategoriesData
+                    : (subsubcategoriesData.subsubcategories || subsubcategoriesData.results || []);
 
-            const filteredSubcategories = subcategories.filter(sub => sub.parent_category === Number(categoryId));
+                const filteredSubcategories = subcategories.filter(sub => sub.parent_category === Number(categoryId));
 
-            container.innerHTML = ''; // очищаем контейнер
+                container.innerHTML = ''; // очищаем контейнер
 
-            if (filteredSubcategories.length > 0) {
-                filteredSubcategories.forEach(sub => {
-                    // создаем ul для каждой подкатегории
-                    const ul = document.createElement('ul');
+                if (filteredSubcategories.length > 0) {
+                    filteredSubcategories.forEach(sub => {
+                        const ul = document.createElement('ul');
 
-                    // в ul первым элементом добавляем p с названием подкатегории
-                    const p = document.createElement('p');
-                    p.textContent = sub.sub_category_name;
-                    ul.appendChild(p);
 
-                    // фильтруем под-подкатегории для текущей подкатегории
-                    const subSubs = subsubcategories.filter(ss => ss.parent_subcategory === sub.id);
+                        const p = document.createElement('p');
+                        p.textContent = sub.sub_category_name;
+                        p.id = `${sub.id}`;
+                        p.classList.add('subcategory');
+                        ul.appendChild(p);
 
-                    if (subSubs.length > 0) {
-                        subSubs.forEach(ss => {
+                        const subSubs = subsubcategories.filter(ss => ss.parent_subcategory === sub.id);
+
+                        if (subSubs.length > 0) {
+                            subSubs.forEach(ss => {
+                                const li = document.createElement('li');
+                                li.classList.add('subsub_item');
+                                li.id = `${ss.id}`; // ✅ уникальный ID для под-подкатегории
+                                li.textContent = ss.subsub_category_name;
+                                ul.appendChild(li);
+                            });
+                        } else {
                             const li = document.createElement('li');
-                            li.classList.add('subsub_item');
-                            li.textContent = ss.subsub_category_name;
+                            li.textContent = 'Нет под-подкатегорий';
                             ul.appendChild(li);
-                        });
-                    } else {
-                        const li = document.createElement('li');
-                        li.textContent = 'Нет под-подкатегорий';
-                        ul.appendChild(li);
-                    }
+                        }
 
-                    // добавляем этот ul в контейнер
-                    container.appendChild(ul);
+                        container.appendChild(ul);
+                    });
+                } else {
+                    container.textContent = 'Нет подкатегорий';
+                }
+                document.querySelectorAll('.subcategory').forEach(item => {
+                    item.addEventListener('click', () => {
+                        console.log('aboba');
+
+                        const subcategoryId = item.id;
+                        const url = new URL('http://127.0.0.1:8000/cards_search');
+                        url.searchParams.set('subcategory', subcategoryId);
+                        window.location.href = url.toString();
+                    });
                 });
-            } else {
-                container.textContent = 'Нет подкатегорий';
-            }
-        })
-        .catch(error => {
-            console.error('Ошибка при получении данных:', error);
+                document.querySelectorAll('.subsub_item').forEach(item => {
+                    item.addEventListener('click', () => {
+                        const subsubcategoryId = item.id;
+                        const url = new URL('http://127.0.0.1:8000/cards_search');
+                        url.searchParams.set('subsub_category', subsubcategoryId);
+                        window.location.href = url.toString();
+                    });
+                });
+            })
+            .catch(error => {
+                console.error('Ошибка при получении данных:', error);
+            });
+    });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.category_item').forEach(item => {
+        item.addEventListener('click', () => {
+            const categoryId = item.dataset.id;
+            const url = new URL('http://127.0.0.1:8000/cards_search');
+            url.searchParams.set('category', categoryId);
+            window.location.href = url.toString();
         });
     });
+
+});
+
+document.querySelector('.btnsearch').addEventListener('click', () => {
+    const input = document.querySelector('.inpsearch');
+    const query = input.value.trim();
+
+    const url = new URL('http://127.0.0.1:8000/cards_search');
+    if (query) {
+        url.searchParams.set('description', query);
+    }
+    window.location.href = url.toString();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const resetBtn = document.querySelector('button.sbros');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      window.location.href = 'http://127.0.0.1:8000/cards_search';
+    });
+  }
 });
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -228,12 +266,30 @@ document.getElementById('maxPriceInput').addEventListener('keydown', e => {
 
 
 document.addEventListener('click', (event) => {
-  const card = event.target.closest('.card_ser');
-  if (card && card.dataset.productId) {
-    const productId = card.dataset.productId;
+    const card = event.target.closest('.card_ser');
+    if (card && card.dataset.productId) {
+        const productId = card.dataset.productId;
 
-    localStorage.setItem('selectedProductId', productId);
+        localStorage.setItem('selectedProductId', productId);
 
-    window.location.href = 'http://127.0.0.1:8000/card_detail';
-  }
+        window.location.href = 'http://127.0.0.1:8000/card_detail';
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const postBtn = document.querySelector('.ad_post');
+
+    if (postBtn) {
+        postBtn.addEventListener('click', (event) => {
+            event.preventDefault();
+
+            const accessToken = localStorage.getItem('accessToken');
+
+            if (accessToken) {
+                window.location.href = 'http://127.0.0.1:8000//ad_create';
+            } else {
+                document.querySelector('.log_inp').style.left = '0';
+            }
+        });
+    }
 });

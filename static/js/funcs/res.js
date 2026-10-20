@@ -357,10 +357,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 document.querySelector('.google_login_btn').addEventListener('click', () => {
-    const clientId = '855620373622-hlvav5npqebntirnsd29nfjr42rg4f33.apps.googleusercontent.com'; // Подставь свой Client ID
-    const redirectUri = 'http://localhost:8000';
+    const clientId = '855620373622-hlvav5npqebntirnsd29nfjr42rg4f33.apps.googleusercontent.com'; 
     const scope = 'openid email profile';
-
     const authUrl = `https://accounts.google.com/o/oauth2/v2/auth` +
         `?response_type=code` +
         `&client_id=${clientId}` +
@@ -373,10 +371,10 @@ document.querySelector('.google_login_btn').addEventListener('click', () => {
 
 
 const clientId = '855620373622-hlvav5npqebntirnsd29nfjr42rg4f33.apps.googleusercontent.com';
-const redirectUri = 'http://localhost:8000';
-const scope = 'openid email profile'; // Запрашиваем профиль, email и openid
+const redirectUri = 'http://127.0.0.1:8000';
+const scope = 'openid email profile'; 
 const responseType = 'id_token';
-const nonce = 'random_nonce_123456'; // Для безопасности — лучше генерировать случайно
+const nonce = 'random_nonce_123456'; 
 
 document.querySelectorAll('.google_login_btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -415,3 +413,101 @@ window.addEventListener('DOMContentLoaded', () => {
             .catch(err => console.error('Ошибка авторизации:', err));
     }
 });
+
+
+async function loadFooter() {
+    console.log('Загрузка футера началась');
+
+    try {
+        const logoDiv = document.querySelector('.fo_logo');
+        const copyDiv = document.querySelector('.fo_copyright');
+        const linksDiv = document.querySelector('.fo_links');
+
+        logoDiv.innerHTML = '';
+        copyDiv.textContent = '';
+        linksDiv.innerHTML = '';
+
+        // 1. Загрузка логотипа
+        const logoRes = await fetch('/api/site_logo/');
+        if (logoRes.ok) {
+            const logoJson = await logoRes.json();
+            const logoData = logoJson.results?.[0];
+            if (logoData?.header_logo) {
+                const img = document.createElement('img');
+                img.src = logoData.header_logo;
+                img.alt = 'Site Logo';
+                img.classList.add('footer-logo-img');
+                logoDiv.appendChild(img);
+            }
+        }
+
+        // 2. Загрузка копирайта
+        const copyRes = await fetch('/api/footer_copyright/');
+        if (copyRes.ok) {
+            const copyJson = await copyRes.json();
+            const copyData = copyJson.results?.[0];
+            if (copyData?.copyright) {
+                copyDiv.textContent = copyData.copyright;
+            }
+        }
+
+        // 3. Загрузка ссылок и создание выпадающего меню
+        const linksRes = await fetch('/api/footer_links/');
+        if (linksRes.ok) {
+            const linksJson = await linksRes.json();
+            const linksData = linksJson.results?.[0];
+
+            if (linksData?.footer_category || Array.isArray(linksData?.link)) {
+                // Добавляем класс для контейнера
+                linksDiv.classList.add('footer-menu');
+
+                // Кнопка открытия меню
+                const toggleBtn = document.createElement('button');
+                toggleBtn.className = 'footer-menu-toggle';
+                toggleBtn.type = 'button';
+                toggleBtn.textContent = `${linksData.footer_category ?? 'Ссылки'} ▾`;
+                linksDiv.appendChild(toggleBtn);
+
+                // Создаем список ссылок
+                const ul = document.createElement('ul');
+                ul.className = 'footer-menu-list';
+
+                linksData.link.forEach(linkObj => {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.href = linkObj.footer_link_url;
+                    a.textContent = linkObj.footer_link_text;
+                    a.target = '_blank';
+                    li.appendChild(a);
+                    ul.appendChild(li);
+                });
+
+                linksDiv.appendChild(ul);
+            }
+        }
+
+        // 4. Обработчик открытия/закрытия меню
+        document.addEventListener('click', function (e) {
+            const toggleBtn = e.target.closest('.footer-menu-toggle');
+            const dropdown = e.target.closest('.footer-menu');
+
+            // Закрываем все кроме текущего
+            document.querySelectorAll('.fo_links.footer-menu').forEach(d => {
+                if (d !== dropdown) d.classList.remove('show');
+            });
+
+            if (toggleBtn && dropdown) {
+                e.preventDefault();
+                dropdown.classList.toggle('show');
+            } else {
+                // Клик вне меню - закрываем все
+                document.querySelectorAll('.fo_links.footer-menu').forEach(d => d.classList.remove('show'));
+            }
+        });
+
+    } catch (error) {
+        console.error('Ошибка загрузки футера:', error);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', loadFooter);

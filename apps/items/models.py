@@ -180,7 +180,7 @@ class SocialNetwork(models.Model):
         verbose_name_plural = 'Социальная сети'
 
     def __str__(self):  
-        return self.social_network_name
+        return self.social_network_link
     
 
 class PhoneNumber(models.Model):
@@ -233,7 +233,7 @@ class WorkDays(models.Model):
         verbose_name = 'Дни работы'
 
     def __str__(self):
-        return f"График работы для объявления {self.Ad.id}"
+        return f"График работы для объявления {self.ad.id}"
     
 
 class СategoryAdvertising(models.Model):

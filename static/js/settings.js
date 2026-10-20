@@ -486,6 +486,7 @@ async function renderAds() {
             const editBtn = div.querySelector('.set_red');
             editBtn.addEventListener('click', () => {
                 localStorage.setItem('editAdId', ad.id);
+                window.location.href = 'http://127.0.0.1:8000//ad_create';
             });
         }
 
@@ -505,27 +506,194 @@ renderAds();
 document.addEventListener('DOMContentLoaded', () => {
     const liMain = document.querySelector('.li_main_set');
     const liCards = document.querySelector('.li_user_cards_set');
+    const liCardsFa = document.querySelector('.li_cards_fa');
 
     const blockMain = document.querySelector('.main_set');
     const blockCards = document.querySelector('.user_cards_set');
+    const blockCardsFa = document.querySelector('.favotirs');
 
-    function activateTab(activeLi, inactiveLi, showBlock, hideBlock) {
+    function activateTab(activeLi, inactiveLis, showBlock, hideBlocks) {
         activeLi.classList.add('active_tab');
-        inactiveLi.classList.remove('active_tab');
+        inactiveLis.forEach(li => li.classList.remove('active_tab'));
 
-        showBlock.style.display = 'flex';
-        hideBlock.style.display = 'none';
+        if (showBlock === blockCardsFa) {
+            showBlock.style.display = 'block';
+        } else {
+            showBlock.style.display = 'flex';
+        }
+
+        hideBlocks.forEach(block => {
+            block.style.display = 'none';
+        });
     }
 
-    if (liMain && liCards && blockMain && blockCards) {
+    if (liMain && liCards && liCardsFa && blockMain && blockCards && blockCardsFa) {
         liMain.addEventListener('click', () => {
-            activateTab(liMain, liCards, blockMain, blockCards);
+            activateTab(liMain, [liCards, liCardsFa], blockMain, [blockCards, blockCardsFa]);
         });
 
         liCards.addEventListener('click', () => {
-            activateTab(liCards, liMain, blockCards, blockMain);
+            activateTab(liCards, [liMain, liCardsFa], blockCards, [blockMain, blockCardsFa]);
+        });
+
+        liCardsFa.addEventListener('click', () => {
+            activateTab(liCardsFa, [liMain, liCards], blockCardsFa, [blockMain, blockCards]);
         });
     }
 });
 
 
+
+
+async function getFavoriteAdIds() {
+    try {
+        const response = await fetch('/api/user_favorit_ads/', {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+            }
+        });
+        if (!response.ok) throw new Error('Ошибка загрузки избранных объявлений');
+        const data = await response.json();
+        return data.results.map(fav => fav.ad);
+    } catch (error) {
+        console.error('Ошибка при загрузке избранного:', error);
+        return [];
+    }
+}
+
+async function toggleFavorite(adId, cardInfElement) {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+        alert('Вы не авторизованы!');
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/favorit_add/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ ad: adId })
+        });
+
+        if (!response.ok) throw new Error('Ошибка добавления в избранное');
+
+        // Переключаем класс favorite
+        const isFavNow = cardInfElement.classList.toggle('favorite');
+
+        // Меняем цвет иконки в SVG в зависимости от состояния
+        const svgPath = cardInfElement.querySelector('path');
+        if (svgPath) {
+            svgPath.setAttribute('fill', isFavNow ? '#ff0000' : '#a1a8bd');
+        }
+    } catch (error) {
+        console.error('Ошибка при добавлении в избранное:', error);
+    }
+}
+
+
+const cards_fa = document.querySelector('.cards_fa');
+
+async function renderFavoriteAds() {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+        alert('Вы не авторизованы!');
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/user_favorit_cards/', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) throw new Error('Ошибка загрузки избранных объявлений');
+
+        const data = await response.json();
+        const favorites = data.results;
+
+        if (!favorites || favorites.length === 0) {
+            container.innerHTML = '<p>Избранных объявлений нет</p>';
+            return;
+        }
+
+        container.innerHTML = ''; // очистка контейнера
+
+        for (const favoriteItem of favorites) {
+            const ad = favoriteItem.ad;
+
+            const categoryName = await getCategoryName(ad.category);
+
+            const div = document.createElement('div');
+            div.className = 'card';
+            div.dataset.productId = ad.id;
+            div.innerHTML = `
+                <div class="card_image">
+                    <img src="${ad.first_image?.image || '/static/no-image.png'}" alt="">
+                </div>
+                ${ad.past_price ? `<p class="old_price">${Number(ad.past_price).toLocaleString()} <span>Kgs</span></p>` : ''}
+                <p class="price">${Number(ad.price).toLocaleString()} <span>Kgs</span></p>
+                <p class="category">${categoryName}</p>
+                <p class="discroption">${truncate(ad.description)}</p>
+                <div class="card_infos">
+                    <div class="user_icon">
+                        <img src="${ad.user.user_image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaUTp3j_LpF5r5_gNdvW0g7p057ExdcHWbUQ&s'}" alt="">
+                    </div>
+                    <div class="card_inf favorite" style="cursor:pointer;">
+                        <svg width="26" height="26" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.6385 3.11717C14.2968 3.83213 14.6666 4.80202 14.6666 5.81337C14.6666 6.82471 14.2968 7.7946 13.6385 8.50956L8.98197 13.5694C8.95632 13.5973 8.92949 13.6241 8.90155 13.6497C8.35911 14.1465 7.51566 14.1106 7.01764 13.5694L2.3611 8.50956C0.990719 7.02049 0.990719 4.60624 2.3611 3.11717C3.73147 1.6281 5.9533 1.6281 7.32367 3.11717L7.99981 3.85187L8.67594 3.11717C9.33392 2.40188 10.2265 2 11.1572 2C12.088 2 12.9806 2.40188 13.6385 3.11717Z" fill="#ff0000"/>
+                        </svg>
+                    </div>
+                </div>
+            `;
+
+            const cardInfElement = div.querySelector('.card_inf');
+            cardInfElement.addEventListener('click', () => {
+                toggleFavorite(ad.id, cardInfElement);
+            });
+
+            cards_fa.appendChild(div);
+        }
+    } catch (error) {
+        console.error('Ошибка при загрузке избранных объявлений:', error);
+    }
+}
+
+renderFavoriteAds();
+
+
+document.addEventListener('click', (event) => {
+    const image = event.target.closest('.card_image img');
+    if (image) {
+        const card = image.closest('.card');
+        if (card && card.dataset.productId) {
+            const productId = card.dataset.productId;
+
+            localStorage.setItem('selectedProductId', productId);
+
+            window.location.href = 'http://127.0.0.1:8000/card_detail';
+        }
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const postBtn = document.querySelector('.ad_post');
+
+    if (postBtn) {
+        postBtn.addEventListener('click', (event) => {
+            event.preventDefault();
+
+            const accessToken = localStorage.getItem('accessToken');
+
+            if (accessToken) {
+                window.location.href = 'http://127.0.0.1:8000//ad_create';
+            } else {
+                document.querySelector('.log_inp').style.left = '0';
+            }
+        });
+    }
+});

@@ -25,6 +25,9 @@ items_router.register(r'ad_detail', AdDetailViewSet,basename='ad_detail')
 items_router.register(r'ad_map_coordinates', AdMapСoordinatesViewSet,basename='ad_map_coordinates')
 items_router.register(r'citys', citysViewSet,basename='citys')
 items_router.register(r'category_by_id', SubSubCategoryByIdViewset,basename='category_by_id')
+items_router.register(r'user_favorit_ads', FavoriteAdViewSet,basename='user_favorit_ads')
+items_router.register(r'user_favorit_cards', FavoriteAdCardsViewSet,basename='user_favorit_cards')
+
 
 
 

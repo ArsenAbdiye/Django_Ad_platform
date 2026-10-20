@@ -408,6 +408,16 @@ header {
     box-sizing: border-box;
 }
 
+.cards_fa {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px 32px;
+    gap: 16px;
+    /* регулируемый отступ между карточками */
+    box-sizing: border-box;
+}
+
 .card {
     width: calc((100% - 16px * 4) / 5);
     height: 406px;
@@ -846,21 +856,27 @@ header {
 
 .css-1qa90nz {
     position: relative;
-    padding: 24px 16px;
-    background: linear-gradient(45deg, rgb(21, 178, 241) 0%, rgb(11, 120, 227) 98.04%);
     border-radius: 12px;
+}
+.olfo{
+    position: absolute;
+    color: white;
+    font-size: 40px;
+    top: 20px;
 }
 
 .loggo {
+    width: 100%;
+    height: 100px;
     display: flex;
-    -webkit-box-pack: center;
     justify-content: center;
     margin-bottom: 12px;
 }
 
 .loggo img {
-    width: 120px;
-    height: 20px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .LFSubHeading.weight-500 {
@@ -1298,7 +1314,6 @@ header {
 }
 
 .filter_box {
-    position: sticky;
     top: 202px;
     min-width: 294px;
     width: 294px;
@@ -1467,11 +1482,17 @@ header {
 .adv_box {
     width: 300px;
 }
-
-.advser {
-    height: auto;
+.adv_box{
+    height: 400px;
 }
-
+.advser {
+    height: 400px;
+}
+.advser img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
 .cards_ser {
     cursor: pointer;
@@ -1861,6 +1882,199 @@ header {
     color: #e83e2e;
 }
 
-.cre_options{
+.cre_options {
     display: none;
+}
+
+.card_inf.favorite svg path {
+    fill: #e83e2e !important;
+}
+
+.favotirs {
+    display: none;
+    width: 95%;
+    margin: 20px auto;
+}
+
+.de_img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.de_img img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.de_user {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+    background-color: #e4e4e4;
+    padding: 20px 10px;
+    border-radius: 5px;
+}
+
+.de_options {
+    margin-top: 20px;
+}
+
+.de_options div {
+    padding: 10px 0;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    font-size: 15px;
+}
+
+.de_phones p {
+    font-weight: 200;
+}
+
+.us_us {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.de_options {
+  display: flex;
+  flex-direction: column;
+}
+
+.de_options > div {
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc; 
+}
+
+.de_options > div:last-child {
+  border-bottom: none;
+}
+.pdes{
+    text-align: left;
+}
+
+/* Основной стиль футера */
+footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f5f5f5;
+  color: #222;
+  padding: 20px 30px;
+  font-family: Arial, sans-serif;
+  gap: 20px;
+  border-top: 1px solid #ddd;
+}
+
+/* Логотип */
+.fo_logo img.footer-logo-img {
+  max-height: 40px;
+  filter: grayscale(100%);
+  object-fit: contain;
+  display: block;
+}
+
+.fo_logo {
+  flex: 1 1 120px;
+}
+
+/* Копирайт */
+.fo_copyright {
+  flex: 1 1 200px;
+  font-size: 14px;
+  text-align: center;
+  color: #555;
+}
+
+/* Контейнер ссылок */
+.fo_links {
+  flex: 1 1 200px;
+  text-align: right;
+}
+
+/* Выпадающее меню */
+.fo_links.footer-menu {
+  position: relative;
+  display: inline-block;
+}
+
+/* Кнопка открытия меню */
+.footer-menu-toggle {
+  background: none;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  color: #0077cc;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* Меню — скрыто по умолчанию */
+.footer-menu-list {
+  display: none;
+  position: absolute;
+  bottom: 100%;               /* открытие вверх */
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  width: max-content;          /* ширина по содержимому */
+  max-width: 240px;
+  z-index: 1000;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+  padding: 6px 0;
+}
+
+/* Пункты меню */
+.footer-menu-list li {
+  padding: 0;
+  list-style: none;
+}
+
+/* Ссылки */
+.footer-menu-list li a {
+  color: #0077cc;
+  text-decoration: none;
+  display: block;
+  padding: 6px 14px;
+  font-size: 14px;
+  white-space: nowrap;
+  transition: background 0.3s;
+}
+
+.footer-menu-list li a:hover {
+  background-color: #f0f0f0;
+}
+
+/* Показываем меню при активном классе */
+.fo_links.footer-menu.show .footer-menu-list {
+  display: block;
+}
+
+/* Адаптивность */
+@media (max-width: 600px) {
+  footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .fo_logo,
+  .fo_copyright,
+  .fo_links {
+    flex: 1 1 100%;
+    text-align: left;
+  }
+
+  .footer-menu-list {
+    left: 0;
+    right: auto;
+    width: 100%;
+  }
 }

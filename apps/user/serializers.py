@@ -232,3 +232,18 @@ class ResetPasswordSerializer(serializers.Serializer):
         if not CustomUser.objects.filter(email=value).exists():
             raise serializers.ValidationError("Пользователь с таким email не найден.")
         return value
+
+from apps.items.serializers import AdCardSerializer
+
+class UserInfoSerializer(serializers.ModelSerializer):
+    ad_user = AdCardSerializer(many=True, read_only=True)
+    class Meta:
+        model = CustomUser
+        fields = [
+            'usernickname',
+            'user_image',
+            'user_discription',
+            'email',
+            'phone',
+            'ad_user'
+        ]
