@@ -19,31 +19,26 @@ document.addEventListener('DOMContentLoaded', () => {
         return response.json();
     })
     .then(data => {
-        // Вставка фото
         const imgTag = document.querySelector('.user_image_setin img');
         if (imgTag && data.user_image) {
             imgTag.src = data.user_image;
         }
 
-        // Вставка имени
         const nameInput = document.querySelector('.user_name_set input');
         if (nameInput && data.usernickname) {
             nameInput.value = data.usernickname;
         }
 
-        // Вставка описания
         const aboutTextarea = document.querySelector('.user_disc_set textarea');
         if (aboutTextarea && data.user_discription) {
             aboutTextarea.value = data.user_discription.replace(/<\/?[^>]+(>|$)/g, "");
         }
 
-        // Вставка телефона
         const phoneField = document.querySelector('.ph_li_set');
         if (phoneField && data.phone) {
             phoneField.textContent = data.phone;
         }
 
-        // Вставка email
         const emailField = document.querySelector('.em_li_set');
         if (emailField && data.email) {
             emailField.textContent = data.email;
@@ -62,18 +57,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const deleteBtn = document.querySelector('.user_img_btn_set button:last-child');
     const imageTag = document.querySelector('.user_image_setin img');
 
-    // Загрузка из localStorage при старте
     const storedImage = localStorage.getItem('user_profile_image');
     if (storedImage && imageTag) {
         imageTag.src = storedImage;
     }
 
-    // Открыть выбор файла
     chooseBtn.addEventListener('click', () => {
         fileInput.click();
     });
 
-    // При выборе файла
     fileInput.addEventListener('change', (e) => {
         const file = e.target.files[0];
         if (file && file.type.startsWith('image/')) {
@@ -81,17 +73,16 @@ document.addEventListener('DOMContentLoaded', () => {
             reader.onload = function (event) {
                 const imageUrl = event.target.result;
                 imageTag.src = imageUrl;
-                localStorage.setItem('user_profile_image', imageUrl); // сохраняем в localStorage
+                localStorage.setItem('user_profile_image', imageUrl); 
             };
             reader.readAsDataURL(file);
         }
     });
 
-    // Удалить изображение
     deleteBtn.addEventListener('click', () => {
         imageTag.src = '';
         localStorage.removeItem('user_profile_image');
-        fileInput.value = ''; // сбросить выбранный файл
+        fileInput.value = ''; 
     });
 });
 
@@ -99,7 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const nameInput = document.getElementById('userNameInput');
     const aboutTextarea = document.getElementById('userAboutTextarea');
 
-    // Загружаем данные из localStorage
     const savedName = localStorage.getItem('user_name');
     const savedAbout = localStorage.getItem('user_about');
 
@@ -111,12 +101,10 @@ document.addEventListener('DOMContentLoaded', () => {
         aboutTextarea.value = savedAbout;
     }
 
-    // Сохраняем имя при вводе
     nameInput.addEventListener('input', () => {
         localStorage.setItem('user_name', nameInput.value);
     });
 
-    // Сохраняем "о себе" при вводе
     aboutTextarea.addEventListener('input', () => {
         localStorage.setItem('user_about', aboutTextarea.value);
     });
@@ -132,12 +120,10 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Собираем данные из localStorage и полей
-        const userImage = localStorage.getItem('user_profile_image'); // base64
+        const userImage = localStorage.getItem('user_profile_image'); 
         const userName = document.getElementById('userNameInput').value;
         const userAbout = document.getElementById('userAboutTextarea').value;
 
-        // Преобразование base64 изображения в Blob
         const imageBlob = userImage ? dataURLtoBlob(userImage) : null;
         const formData = new FormData();
 
@@ -147,8 +133,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         formData.append('usernickname', userName || '');
         formData.append('user_discription', userAbout || '');
-        formData.append('is_vip', false);  // можно заменить значением из чекбокса
-        formData.append('is_pro', false);  // можно заменить значением из чекбокса
+        formData.append('is_vip', false);  
+        formData.append('is_pro', false);  
 
         try {
             const response = await fetch('http://127.0.0.1:8000/api/user_options/0/', {
